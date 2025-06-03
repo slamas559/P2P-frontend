@@ -32,7 +32,7 @@ const Chat = () => {
 
   useEffect(() => {
     // socket.current = io("http://localhost:5000"); // Change for production
-    const socket = io("https://p2p-api.up.railway.app", {
+    socket.current = io("https://p2p-api.up.railway.app", {
       transports: ['websocket'],
       withCredentials: true
     });
