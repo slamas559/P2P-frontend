@@ -31,7 +31,11 @@ const Chat = () => {
   const socket = useRef();
 
   useEffect(() => {
-    socket.current = io("http://localhost:5000"); // Change for production
+    // socket.current = io("http://localhost:5000"); // Change for production
+    const socket = io("https://p2p-api.up.railway.app", {
+      transports: ['websocket'],
+      withCredentials: true
+    });
 
     if (conversationId) {
       socket.current.emit("join_conversation", conversationId);
