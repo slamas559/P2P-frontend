@@ -49,7 +49,7 @@ const Chat = () => {
     socket.current.on("receive_message", (msg) => {
       const normalizedMsg = {
           ...msg,
-          sender: msg.sender._id || msg.userId || "unknown", // fallback if sender is missing
+          sender: msg.sender?._id || msg.userId || "unknown", // fallback if sender is missing
           text: msg.text || "",
           receiver: msg.receiver?._id || msg.receiver || "unknown", // fallback if receiver is missing
           conversationId: msg.conversationId || "",
