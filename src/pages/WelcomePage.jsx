@@ -1,6 +1,7 @@
 // pages/WelcomePage.jsx
 import { useNavigate } from "react-router-dom";
 import { FaShieldAlt, FaBolt, FaUsers, FaHandshake } from "react-icons/fa";
+import screenshot from "../assets/screenshot.png"; // Adjust the path as necessary
 
 const WelcomePage = () => {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ const WelcomePage = () => {
 
       <section className="my-12 w-full max-w-4xl rounded-xl overflow-hidden border border-neonLight shadow-lg">
         <img
-          src="./src/assets/screenshot.png" // replace with your actual image path
+          src={screenshot} // replace with your actual image path
           alt="App Screenshot"
           className="w-full object-cover"
         />
