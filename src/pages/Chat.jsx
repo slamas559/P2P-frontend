@@ -41,6 +41,11 @@ const Chat = () => {
       socket.current.emit("join_conversation", conversationId);
     }
 
+    socket.on("connect_error", (err) => {
+      console.error("❌ Socket.IO connection error:", err.message);
+    });
+
+
     socket.current.on("receive_message", (msg) => {
       const normalizedMsg = {
           ...msg,
