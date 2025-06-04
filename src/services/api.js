@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const api = axios.create({
-  // baseURL: "https://p2p-api.up.railway.app/api", // your backend URL
-  baseURL: "http://localhost:5000/api", // your backend URL
+  baseURL: "https://p2p-api.up.railway.app/api", // your backend URL
+  // baseURL: "http://localhost:5000/api", // your backend URL
   headers: {
     "Content-Type": "application/json",
   },

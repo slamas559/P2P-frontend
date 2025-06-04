@@ -15,8 +15,10 @@
   --color-border: #d1d5db;
   --color-dark: #0f172a;      
   --color-dark-light: lab(7.96% 3.32 -14.07);      
-  --color-neon: #ffd700; 
-  /* #00ff94;        */
+  --color-neon: #ffd700;
+   /* #ffd700;  */
+   /* #E5C100 */
+  /* ;        */
   --color-neonLight: #ffd90078;
 }
 
