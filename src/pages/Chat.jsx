@@ -48,6 +48,12 @@ const Chat = () => {
     });
 
 
+  useEffect(() => {
+      if (socket.current && auth?.user?._id) {
+        socket.current.emit("join_user", auth.user._id);
+      }
+    }, [auth?.user?._id]);
+
     socket.current.on("receive_message", (msg) => {
       const normalizedMsg = {
           ...msg,
@@ -57,7 +63,15 @@ const Chat = () => {
           conversationId: msg.conversationId || "",
           createdAt: msg.createdAt || new Date().toISOString(),
       };
-      setMessages((prev) => [...prev, normalizedMsg]);
+      if (normalizedMsg.conversationId === conversationId) {
+        setMessages((prev) => [...prev, normalizedMsg]);
+      } else {
+        // Example: increment unread badge
+        setUnreadCounts((prev) => ({
+          ...prev,
+          [normalizedMsg.conversationId]: (prev[normalizedMsg.conversationId] || 0) + 1,
+        }));
+      }
     });
 
     return () => {
