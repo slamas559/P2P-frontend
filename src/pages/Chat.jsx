@@ -47,13 +47,6 @@ const Chat = () => {
       console.error("❌ Socket.IO connection error:", err.message);
     });
 
-
-  useEffect(() => {
-      if (socket.current && auth?.user?._id) {
-        socket.current.emit("join_user", auth.user._id);
-      }
-    }, [auth?.user?._id]);
-
     socket.current.on("receive_message", (msg) => {
       const normalizedMsg = {
           ...msg,
@@ -78,6 +71,12 @@ const Chat = () => {
       socket.current.disconnect();
     };
   }, [conversationId]);
+
+  useEffect(() => {
+      if (socket.current && auth?.user?._id) {
+        socket.current.emit("join_user", auth.user._id);
+      }
+    }, [auth?.user?._id]);
 
   useEffect(() => {
     if (!receiver) return;
