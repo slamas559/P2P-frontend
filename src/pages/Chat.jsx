@@ -34,11 +34,11 @@ const Chat = () => {
   const socket = useRef();
 
   useEffect(() => {
-    socket.current = io("http://localhost:5000"); // Change for production
-    // socket.current = io("https://p2p-api.up.railway.app", {
-    //   transports: ['polling', 'websocket'],
-    //   withCredentials: true
-    // });
+    // socket.current = io("http://localhost:5000"); // Change for production
+    socket.current = io("https://p2p-api.up.railway.app", {
+      transports: ['polling', 'websocket'],
+      withCredentials: true
+    });
 
     socket.current.on("connect", () => {
       if (conversationId) {
@@ -128,7 +128,7 @@ const Chat = () => {
 
   useEffect(() => {
   const sendPreMessage = async () => {
-    if (preMessage && conversationId && !preMessageSent.current) {
+    // if (preMessage && conversationId && !preMessageSent.current) {
       const newMessage = {
         sender: auth?.user?._id,
         text: preMessage,
@@ -143,7 +143,7 @@ const Chat = () => {
         message: newMessage,
       });
       preMessageSent.current = true;
-    }
+    // }
   };
   sendPreMessage();
 }, [conversationId, preMessage, receiver, auth?.user?._id]);
