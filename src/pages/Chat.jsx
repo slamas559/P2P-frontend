@@ -33,7 +33,7 @@ const Chat = () => {
   useEffect(() => {
     // socket.current = io("http://localhost:5000"); // Change for production
     socket.current = io("https://p2p-api.up.railway.app", {
-      transports: ['websocket'],
+      transports: ['polling', 'websocket'],
       withCredentials: true
     });
 
@@ -172,9 +172,9 @@ const Chat = () => {
       receiver:conversations.find(conv => conv._id === conversationId)?.members.find(member => member._id !== auth?.user?._id)?._id || "unknown",
       createdAt: new Date().toISOString(),
     };
-    setMessages((prev) => [...prev, { ...newMessage}]);
+    // setMessages((prev) => [...prev, { ...newMessage}]);
     setInput("");
-    await api.post("/chat/message", newMessage);
+    // await api.post("/chat/message", newMessage);
     socket.current.emit("send_message", newMessage);
   };
 
