@@ -2,7 +2,7 @@ import SkeletonBlock from "./SkeletonBlock";
 
 const SkeletonCard = () => {
   return (
-    <div className="flex justify-between items-center bg-darkLight border border-neon p-4 rounded-xl m-2 shadow-md animate-pulse">
+    <div className="flex justify-between items-center bg-darkLight border border-gray-800 p-4 rounded-xl m-2 shadow-md animate-pulse">
       <div className="flex-1 space-y-2 pr-4">
         <SkeletonBlock width="w-24" height="h-5" className="orbitron" />
         <div className="flex items-center space-x-3">
@@ -15,7 +15,7 @@ const SkeletonCard = () => {
         <SkeletonBlock width="w-48" height="h-3" />
       </div>
       <div className="flex flex-col justify-between">
-        <SkeletonBlock width="w-16" height="h-10" className="bg-neon rounded" />
+        <SkeletonBlock width="w-16" height="h-10" className="bg-neonLight rounded" />
       </div>
     </div>
   );

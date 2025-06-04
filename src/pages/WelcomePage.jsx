@@ -10,7 +10,7 @@ const WelcomePage = () => {
     <div className="min-h-screen text-white flex flex-col items-center px-4 pt-16">
     <section className="text-center max-w-3xl mt-20">
       <h1 className="text-4xl md:text-6xl font-bold mb-6 orbitron text-neon">
-        Welcome to CryptoConnect
+        Welcome to The Grand Acme
       </h1>
       <p className="text-lg text-gray-300 mb-8">
         Buy and sell crypto securely with verified dealers. Real-time chat, admin-controlled trades, and a sleek experience designed for trust and speed.
@@ -38,7 +38,7 @@ const WelcomePage = () => {
 
       {/* Features Section */}
       <section className="text-center my-10">
-        <h2 className="text-3xl orbitron text-neon mb-8">Why Choose CryptoConnect?</h2>
+        <h2 className="text-3xl orbitron text-neon mb-8">Why Choose Grand Acme?</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           <FeatureCard
             icon={<FaShieldAlt className="text-3xl text-neon" />}

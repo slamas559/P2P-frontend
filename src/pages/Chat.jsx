@@ -4,6 +4,7 @@ import api from "../services/api";
 import { useLocation } from "react-router-dom";
 import { Menu } from "lucide-react"; // optional: any icon library you prefer
 import { io } from "socket.io-client";
+import { useNavigate } from "react-router-dom";
 
 const Chat = () => {
   const { auth } = useAuth();
@@ -14,13 +15,15 @@ const Chat = () => {
   const [conversationId, setConversationId] = useState(null);
   const [conversations, setConversations] = useState([]);
   const [selectedConversation, setSelectedConversation] = useState(null);
-  const [sidebarOpen, setSidebarOpen] = useState(false); // 👈 Toggle state for mobile
+  const [sidebarOpen, setSidebarOpen] = useState(true); // 👈 Toggle state for mobile
   const chatEndRef = useRef(null);
   const location = useLocation();
   const preMessageSent = useRef(false);
   const [unreadCounts, setUnreadCounts] = useState({});
   const [clickedConversation, setClickedConversation] = useState(null);
   const { receiver, preMessage } = location.state || {};
+  const navigate = useNavigate();
+  
 
   const userId = auth?.user?._id;
 
@@ -31,11 +34,11 @@ const Chat = () => {
   const socket = useRef();
 
   useEffect(() => {
-    // socket.current = io("http://localhost:5000"); // Change for production
-    socket.current = io("https://p2p-api.up.railway.app", {
-      transports: ['polling', 'websocket'],
-      withCredentials: true
-    });
+    socket.current = io("http://localhost:5000"); // Change for production
+    // socket.current = io("https://p2p-api.up.railway.app", {
+    //   transports: ['polling', 'websocket'],
+    //   withCredentials: true
+    // });
 
     socket.current.on("connect", () => {
       if (conversationId) {
@@ -240,7 +243,15 @@ const Chat = () => {
 
       {/* Chat Panel */}
       <div className="flex-1 flex w-full h-full flex-col p-4 bg-dark rounded-lg relative">
-
+      <div className="flex items-center justify-between ml-15 mb-4">
+        <a onClick={() => {navigate(`/profile/${conversations.find(conv => conv._id === selectedConversation._id)?.members.find(member => member._id !== auth?.user?._id)?._id}`)}} className="md:hidden text-neon hover:text-neonLight">
+          <h2 className="text-neon font-bold text-lg">  
+            {selectedConversation ?
+              conversations.find(conv => conv._id === selectedConversation._id)?.members.find(member => member._id !== auth?.user?._id)?.name || "Chat"
+              : "Select a chat"}
+          </h2> 
+        </a>
+      </div>
         <div className="flex-1 h-full overflow-y-auto no-scrollbar bg-darkLight rounded-b-lg px-3 py-2">
           {/* {openChat ? ( */}
            { loading ? (

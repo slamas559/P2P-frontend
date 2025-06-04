@@ -37,7 +37,7 @@ export default function Navbar() {
     <nav className="w-full fixed top-0 left-0 z-50 px-4 py-4 bg-dark border-b border-neon">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <Link to="/home" className="orbitron text-neon text-xl font-bold">
-          P2P CryptoX
+          The Grand Acme
         </Link>
 
 
@@ -73,7 +73,7 @@ export default function Navbar() {
           {auth?.token ? (
             <>
               <a onClick={goProfile} className="cursor-pointer transition">
-                <p className="space-grotesk hover:text-gray-400 text-gray-200  sm:block">
+                <p className="space-grotesk hover:text-gray-400 text-gray-200 truncate sm:block">
                   Hi, {auth?.user?.name || "Guest"}!
                 </p>
               </a>

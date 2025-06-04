@@ -83,12 +83,9 @@ const CreateTrade = () => {
             <option value="USDT">USDT</option>
             <option value="BTC">BTC</option>
             <option value="ETH">ETH</option>
-            <option value="BUSD">BUSD</option>
-            <option value="XRP">XRP</option>
-            <option value="ADA">ADA</option>
+            <option value="BUSD">BNB</option>
+            <option value="XRP">Trc 20</option>
             <option value="SOL">SOL</option>
-            <option value="DOGE">DOGE</option>
-            <option value="DOT">DOT</option>
         </select>
 
         <input
