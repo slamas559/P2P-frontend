@@ -1,4 +1,3 @@
-// src/components/Login.jsx
 import AuthLayout from "../components/AuthLayout";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -7,9 +6,8 @@ import api from "../services/api";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { GoogleLogin } from "@react-oauth/google";
-import { jwtDecode } from "jwt-decode";  // <-- Correct import syntax
+import { jwtDecode } from "jwt-decode";
 import { useNotification } from '../context/NotificationContext';
-
 
 const schema = yup.object({
   email: yup.string().email().required(),
@@ -28,40 +26,31 @@ const Login = () => {
   const onSubmit = async (data) => {
     try {
       const res = await api.post("/auth/login", data);
-      login(res.data); // Save token to context
-      handleClick(); // Show success notification
-      navigate("/home");
-    } catch (err) {
-      handleError(); // Show error notification}
-  };
-  }
-
-  // This function handles Google login success
-  const handleSuccess = async (credentialResponse) => {
-    try {
-      // Decode the JWT token received from Google
-      const decoded = jwtDecode(credentialResponse.credential);
-
-      const googleUser = {
-      name: decoded.name,
-      email: decoded.email,
-      googleId: decoded.sub,
-      };
-      // Send the Google token to your backend to login/register the user
-      const res = await api.post("/auth/google", googleUser);
-      localStorage.setItem('token', res.data.token);
-
-      // Save your backend JWT token in context/state
       login(res.data);
-      handleClick(); // Show success notification
-      // Redirect to home page after successful login
+      handleClick();
       navigate("/home");
     } catch (err) {
-      handleError(); // Show error notification
+      handleError();
     }
   };
 
-
+  const handleSuccess = async (credentialResponse) => {
+    try {
+      const decoded = jwtDecode(credentialResponse.credential);
+      const googleUser = {
+        name: decoded.name,
+        email: decoded.email,
+        googleId: decoded.sub,
+      };
+      const res = await api.post("/auth/google", googleUser);
+      localStorage.setItem('token', res.data.token);
+      login(res.data);
+      handleClick();
+      navigate("/home");
+    } catch (err) {
+      handleError();
+    }
+  };
 
   const handleClick = () => {
     showNotification({ type: 'success', message: 'Logged in successfully!' });
@@ -73,38 +62,51 @@ const Login = () => {
 
   return (
     <AuthLayout>
-      <h2 className="text-2xl font-bold text-neon mb-6 text-center">Login</h2>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-        <input {...register("email")}
-          type="email"
-          placeholder="Email"
-          className="bg-dark border border-neonLight text-white px-4 py-2 rounded focus:outline-none focus:border-neon transition input"
-        />
-        <p className="text-red-400 text-sm">{errors.email?.message}</p>
+      <div className="w-full max-w-md mx-auto bg-darkLight p-6 rounded shadow-md">
+        <h2 className="text-2xl font-bold text-neon mb-6 text-center">Login</h2>
 
-        <input {...register("password")}
-          type="password"
-          placeholder="Password"
-          className="bg-dark border border-neonLight text-white px-4 py-2 rounded focus:outline-none focus:border-neon transition input"
-        />
-        <p className="text-red-400 text-sm">{errors.password?.message}</p>
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+          <div>
+            <input
+              {...register("email")}
+              type="email"
+              placeholder="Email"
+              className="w-full bg-dark border border-neonLight text-white px-4 py-2 rounded focus:outline-none focus:border-neon transition"
+            />
+            <p className="text-red-400 text-sm mt-1">{errors.email?.message}</p>
+          </div>
 
-        <button
-          type="submit"
-          className="bg-neon text-dark font-bold py-2 rounded hover:bg-neonLight transition"
-        >
-          Sign In
-        </button>
+          <div>
+            <input
+              {...register("password")}
+              type="password"
+              placeholder="Password"
+              className="w-full bg-dark border border-neonLight text-white px-4 py-2 rounded focus:outline-none focus:border-neon transition"
+            />
+            <p className="text-red-400 text-sm mt-1">{errors.password?.message}</p>
+          </div>
 
-        {/* Google Login button */}
-        <GoogleLogin className="bg-neon text-dark font-bold py-2 rounded hover:bg-neonLight transition"
-          onSuccess={handleSuccess}
-          onError={() => alert("Google Login Failed")}
-        />
-      </form>
-      <p className="mt-4 text-sm text-center text-gray-400">
-        Don't have an account? <a href="/register" className="text-neon underline">Register</a>
-      </p>
+          <button
+            type="submit"
+            className="w-full bg-neon text-dark font-bold py-2 rounded hover:bg-neonLight transition"
+          >
+            Sign In
+          </button>
+
+          <div className="flex justify-center mt-2">
+            <GoogleLogin
+              onSuccess={handleSuccess}
+              onError={() => alert("Google Login Failed")}
+              width=""
+            />
+          </div>
+        </form>
+
+        <p className="mt-6 text-sm text-center text-gray-400">
+          Don't have an account?{" "}
+          <a href="/register" className="text-neon underline">Register</a>
+        </p>
+      </div>
     </AuthLayout>
   );
 };

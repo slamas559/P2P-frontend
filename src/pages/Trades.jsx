@@ -54,7 +54,6 @@ const Trades = () => {
         const res = await api.get(`/trades?page=${page}&limit=${limit}`);
         const newTrades = Array.isArray(res.data.trades) ? res.data.trades : [];
 
-        // Append only unique trades
         setTrades(prev => {
           const seen = new Set(prev.map(t => t._id));
           const unique = newTrades.filter(t => !seen.has(t._id));
@@ -111,7 +110,7 @@ const Trades = () => {
     return () => observer.disconnect();
   }, [observerTarget, hasMore, isLoading, isPaginating]);
 
-  // Safe filtering logic
+  // Filtering logic
   const filteredTrades = (trades || []).filter((trade) => {
     const isTypeMatch =
       activeTab === "Buy" ? trade.type === "buy" :
@@ -134,11 +133,11 @@ const Trades = () => {
 
       <div className="p-4">
         {/* Filters */}
-        <div className="mb-4 flex flex-wrap gap-4">
+        <div className="mb-4 flex flex-wrap gap-3 sm:gap-4">
           <select
             value={cryptoFilter}
             onChange={(e) => setCryptoFilter(e.target.value)}
-            className="bg-darkLight border border-neon text-white p-2 rounded"
+            className="bg-darkLight border border-neon text-white p-2 rounded w-full sm:w-auto"
           >
             <option value="">All Cryptos</option>
             {uniqueCryptos.map((crypto) => (
@@ -149,7 +148,7 @@ const Trades = () => {
           <select
             value={paymentFilter}
             onChange={(e) => setPaymentFilter(e.target.value)}
-            className="bg-darkLight border border-neon text-white p-2 rounded"
+            className="bg-darkLight border border-neon text-white p-2 rounded w-full sm:w-auto"
           >
             <option value="">All Payment Methods</option>
             {uniqueMethods.map((method) => (
@@ -162,7 +161,7 @@ const Trades = () => {
             placeholder="Min Price"
             value={minPrice}
             onChange={(e) => setMinPrice(e.target.value)}
-            className="bg-darkLight border border-neon text-white p-2 rounded"
+            className="bg-darkLight border border-neon text-white p-2 rounded w-full sm:w-auto"
           />
 
           <input
@@ -170,7 +169,7 @@ const Trades = () => {
             placeholder="Max Price"
             value={maxPrice}
             onChange={(e) => setMaxPrice(e.target.value)}
-            className="bg-darkLight border border-neon text-white p-2 rounded"
+            className="bg-darkLight border border-neon text-white p-2 rounded w-full sm:w-auto"
           />
 
           <button
@@ -187,7 +186,7 @@ const Trades = () => {
         </div>
 
         {/* Trade cards */}
-        <div className="grid pt-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {isLoading
             ? Array.from({ length: trades.length || 8 }, (_, i) => <SkeletonCard key={i} />)
             : filteredTrades.map((trade) => <TradeCard key={trade._id} trade={trade} />)}
@@ -204,10 +203,10 @@ const Trades = () => {
         </div>
       </div>
 
-      {/* Chat floating button */}
-      <div className="fixed bottom-25 right-5 p-4 border-neon">
+      {/* Chat Floating Button */}
+      <div className="fixed bottom-6 right-5 p-4 z-50">
         <Link to="/chat" className="relative inline-block">
-          <AiFillMessage className="size-13 color-neon" />
+          <AiFillMessage className="text-neon text-4xl" />
           {totalUnread > 0 && (
             <span className="absolute -top-2 -right-2 bg-red-500 text-xs text-white px-2 py-0.5 rounded-full">
               {totalUnread}

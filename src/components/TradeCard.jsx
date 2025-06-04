@@ -24,6 +24,7 @@ const TradeCard = ({ trade }) => {
       return;
     }
     setError("");
+    setShowModal(false);
     // Redirect to chat page with prefilled message
     navigate("/chat", {
       state: {
