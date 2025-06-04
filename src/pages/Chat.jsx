@@ -37,9 +37,11 @@ const Chat = () => {
       withCredentials: true
     });
 
-    if (conversationId) {
-      socket.current.emit("join_conversation", conversationId);
-    }
+    socket.current.on("connect", () => {
+      if (conversationId) {
+        socket.current.emit("join_conversation", conversationId);
+      }
+    });
 
     socket.current.on("connect_error", (err) => {
       console.error("❌ Socket.IO connection error:", err.message);
@@ -160,10 +162,7 @@ const Chat = () => {
     setMessages((prev) => [...prev, { ...newMessage}]);
     setInput("");
     await api.post("/chat/message", newMessage);
-    socket.current.emit("send_message", {
-    conversationId,
-    message: newMessage,
-});
+    socket.current.emit("send_message", newMessage);
   };
 
   const handleConversationSelect = async (conversation) => {
@@ -227,7 +226,7 @@ const Chat = () => {
       </div>
 
       {/* Chat Panel */}
-      <div className="flex-1 flex max-w-120 h-full flex-col p-4 bg-dark rounded-lg relative">
+      <div className="flex-1 flex w-full h-full flex-col p-4 bg-dark rounded-lg relative">
 
         <div className="flex-1 h-full overflow-y-auto no-scrollbar bg-darkLight rounded-b-lg px-3 py-2">
           {/* {openChat ? ( */}
