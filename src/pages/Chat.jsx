@@ -152,6 +152,8 @@ const Chat = () => {
             };
 
             socket.current.emit("send_message", newMessage);
+            setMessages((prev) => [...prev, newMessage]);
+
             setClicked(true);
             localStorage.setItem(localStorageKey, "true");
 
