@@ -12,6 +12,7 @@ const Chat = () => {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(true);
   const [openChat, setOpenChat] = useState(false);
+  const [clicked, setClicked] = useState(false)
   const [conversationId, setConversationId] = useState(null);
   const [conversations, setConversations] = useState([]);
   const [selectedConversation, setSelectedConversation] = useState(null);
@@ -134,28 +135,44 @@ const Chat = () => {
     fetchUnreadCounts();
   }, [auth?.user?._id, conversationId, clickedConversation]);
 
-  useEffect(() => {
+    useEffect(() => {
     const sendPreMessage = async () => {
-      if (preMessage && conversationId && !preMessageSent.current) {
-        try {
-          const newMessage = {
-            sender: auth?.user?._id,
-            text: preMessage,
-            conversationId,
-            receiver,
-            createdAt: new Date().toISOString(),
-          };
-          socket.current.emit("send_message", newMessage);
-          const res = await api.get(`/chat/messages/${conversationId}`);
-          setMessages(res.data);
-          preMessageSent.current = true;
-        } catch (err) {
-          console.error("Failed to send preMessage:", err);
+      if (preMessage && conversationId && messages.length === 0) {
+        const localStorageKey = `preMessageSent:${conversationId}`;
+        const alreadySent = localStorage.getItem(localStorageKey);
+
+        if (!alreadySent) {
+          try {
+            const newMessage = {
+              sender: auth?.user?._id,
+              text: preMessage,
+              conversationId,
+              receiver,
+              createdAt: new Date().toISOString(),
+            };
+
+            socket.current.emit("send_message", newMessage);
+            setClicked(true);
+            localStorage.setItem(localStorageKey, "true");
+
+          } catch (err) {
+            console.error("Failed to send preMessage:", err);
+          }
         }
       }
     };
     sendPreMessage();
-  }, [conversationId, preMessage, receiver, auth?.user?._id]);
+  }, [conversationId, preMessage, receiver, auth?.user?._id, messages.length]);
+
+
+
+  useEffect(() => {
+    return () => {
+      if (conversationId) {
+        localStorage.removeItem(`preMessageSent:${conversationId}`);
+      }
+    };
+  }, [conversationId]);
 
   useEffect(() => {
     scrollToBottom();
@@ -190,6 +207,7 @@ const Chat = () => {
       });
       setClickedConversation(conversation._id);
       setMessages(res.data);
+      setClicked(true)
     } catch (err) {
       console.error(err);
     }
@@ -259,18 +277,20 @@ const Chat = () => {
         </div>
 
         <div className="flex-1 h-full overflow-y-auto no-scrollbar bg-darkLight rounded-b-lg px-3 py-2">
-          {loading ? (
+          {clicked ? 
+          (<>
+            {loading ? (
             <p className="text-white text-center">Loading chat...</p>
           ) : (
             messages.map((msg, idx) => (
               <div key={idx} className={`flex ${msg.sender === auth?.user?._id ? "justify-end" : "justify-start"}`}>
                 <div
-                  className={`mb-2 max-w-[90%] sm:max-w-[85%] px-3 py-2 rounded-xl text-sm ${
-                    msg.sender === auth?.user?._id ? "bg-neon text-dark" : "bg-gray-700 text-white"
+                  className={`mb-2 max-w-[90%] sm:max-w-[85%] px-4 py-2 rounded-xl text-sm ${
+                    msg.sender === auth?.user?._id ? "bg-blue-500 text-white" : "bg-gray-700 text-white"
                   }`}
                 >
                   <p>{msg.text}</p>
-                  <span className="text-xs text-gray-400 block mt-1">
+                  <span className="text-xs text-gray-300 block mt-1">
                     {new Date(msg.createdAt).toLocaleTimeString([], {
                       hour: "2-digit",
                       minute: "2-digit",
@@ -280,10 +300,18 @@ const Chat = () => {
               </div>
             ))
           )}
+          </>)
+          :
+          (<div>
+            <p className="text-white text-center">Start Messaging</p>
+          </div>)}
+          
           <div ref={chatEndRef} />
         </div>
 
-        <div className="flex items-center gap-2 mt-4">
+        {clicked ? 
+        (<>
+          <div className="flex items-center gap-2 mt-4">
           <input
             type="text"
             value={input}
@@ -298,6 +326,10 @@ const Chat = () => {
             Send
           </button>
         </div>
+        </>)
+        :
+        (<></>)}
+        
       </div>
     </div>
   );

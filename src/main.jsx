@@ -7,11 +7,12 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { NotificationProvider } from './context/NotificationContext';
 
 
+const google_id = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <AuthProvider>
       <NotificationProvider>
-        <GoogleOAuthProvider clientId="52840799545-9uk0d6pclru5norrsdm936v981vnimj0.apps.googleusercontent.com">
+        <GoogleOAuthProvider clientId={google_id}>
           <App />
         </GoogleOAuthProvider>
       </NotificationProvider>
