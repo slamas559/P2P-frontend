@@ -5,6 +5,8 @@ import ShowModal from "../components/ShowModal";
 const TradeCard = ({ trade }) => {
   const [showModal, setShowModal] = useState(false);
   const [amount, setAmount] = useState("");
+  const numericAmount = parseFloat(amount);
+  const total = !isNaN(numericAmount) && numericAmount > 0 ? numericAmount * trade.price : 0;
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -33,6 +35,14 @@ const TradeCard = ({ trade }) => {
     });
   };
 
+  const convertToCurrency = (amount) => {
+    return new Intl.NumberFormat("en-NG", {
+      style: "currency",
+      currency: "NGN",
+      minimumFractionDigits: 2,
+    }).format(amount);
+  };
+
   const goProfile = () => {
     navigate(`/profile/${trade.createdBy._id}`);
   };
@@ -55,7 +65,7 @@ const TradeCard = ({ trade }) => {
 
         <p className="text-gray-400 text-xs md:text-xs mb-1">ID: {trade._id}</p>
         <p className="text-white text-lg md:text-ll font-semibold space-grotesk">
-          {trade.price.toLocaleString()}{" "}
+          {convertToCurrency(trade.price)}
           <span className="text-gray-400 text-sm">/NGN</span>
         </p>
 
@@ -85,6 +95,7 @@ const TradeCard = ({ trade }) => {
           trade={trade}
           error={error}
           amount={amount}
+          total={total}
           handleMax={handleMax}
           handleAction={handleAction}
           setAmount={(e) => setAmount(e.target.value)}

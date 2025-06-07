@@ -148,6 +148,8 @@ export default function Navbar() {
           </div>
         </div>
       )}
+      {/* Outlet for nested routes */}
+      <Outlet />
     </nav>
   );
 }
