@@ -47,7 +47,8 @@ const Chat = () => {
 
   useEffect(() => {
     // socket.current = io("http://localhost:5000");
-    socket.current = io("https://p2p-api.up.railway.app", { 
+    socket.current = io("https://p2p-api.up.railway.app")
+    , { 
       transports: ["websocket", "polling"]
     }
     )
