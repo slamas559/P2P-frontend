@@ -136,7 +136,7 @@ const AdminDashboard = () => {
   const totalPages = Math.ceil(totalTrades / tradeLimit);
 
   return (
-    <div className=" md:p-6 text-white min-h-screen mt-20 bg-dark">
+    <div className="p-6 text-white min-h-screen mt-20 bg-dark">
       <h1 className="text-3xl font-bold text-neon mb-6 orbitron">Admin Dashboard</h1>
 
       {/* Stats */}
@@ -147,7 +147,7 @@ const AdminDashboard = () => {
       </div>
 
       {/* User Management */}
-      <div className="p-6 bg-darkLight space-grotesk rounded-xl text-white">
+      <div className="md:p-6 bg-darkLight space-grotesk rounded-xl text-white">
         <h2 className="text-2xl font-bold mb-4 orbitron text-neon">User Management</h2>
         <input
           type="text"
@@ -198,7 +198,7 @@ const AdminDashboard = () => {
       </div>
 
       {/* Trade Management */}
-      <div className="p-6 mt-4 bg-darkLight space-grotesk rounded-xl text-white">
+      <div className="md:p-6 mt-4 bg-darkLight space-grotesk rounded-xl text-white">
         <h2 className="text-2xl font-bold mb-4 orbitron text-neon">Manage Trades</h2>
         <input
           type="text"
