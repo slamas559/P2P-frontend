@@ -287,7 +287,7 @@ const Chat = () => {
                   {otherUser?.name?.[0]}
                 </div>
                 <div className="flex flex-col">
-                  <span className="font-semibold">{otherUser?.name || "Unknown"}</span>
+                  <span className="font-semibold text-[12px]">{otherUser?.name || "Unknown"}</span>
                   <span className="text-xs text-gray-400 truncate max-w-[160px]">
                     {lastMessage?.image
                       ? "📷"

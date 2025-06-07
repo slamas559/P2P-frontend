@@ -136,7 +136,7 @@ const AdminDashboard = () => {
   const totalPages = Math.ceil(totalTrades / tradeLimit);
 
   return (
-    <div className="p-6 text-white min-h-screen mt-20 bg-dark">
+    <div className=" md:p-6 text-white min-h-screen mt-20 bg-dark">
       <h1 className="text-3xl font-bold text-neon mb-6 orbitron">Admin Dashboard</h1>
 
       {/* Stats */}
