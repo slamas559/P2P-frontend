@@ -189,7 +189,7 @@ const Chat = () => {
       formData.append("image", image);
 
       try {
-        const res = await axios.post("http://localhost:5000/api/upload", formData);
+        const res = await axios.post("https://p2p-api.up.railway.app/api/upload", formData);
         imageUrl = res.data.imageUrl;
       } catch (err) {
         console.error("Image upload failed", err);
