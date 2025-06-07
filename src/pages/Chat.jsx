@@ -263,7 +263,7 @@ const Chat = () => {
       </button>
 
       <div
-        className={`absolute md:static top-0 left-0 h-full z-40 bg-darkLight w-2/3 sm:w-3/4 md:w-1/4 p-2 sm:p-4 overflow-y-auto border-r border-neon transform transition-transform duration-300 ${
+        className={`absolute md:static top-0 left-0 h-full z-40 bg-darkLight w-3/4 sm:w-3/4 md:w-1/4 p-2 sm:p-4 overflow-y-auto border-r border-neon transform transition-transform duration-300 ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
         }`}
       >
