@@ -3,7 +3,7 @@ import { useEffect, useState, useRef } from "react";
 import { useAuth } from "../context/AuthContext";
 import api from "../services/api";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Menu, Upload, Image } from "lucide-react";
+import { Menu, Upload, Image, Send } from "lucide-react";
 import { io } from "socket.io-client";
 import axios from "axios";
 
@@ -428,7 +428,7 @@ const Chat = () => {
                 placeholder="Type your message..."
                 className="flex-1 bg-darkLight border border-neon px-3 py-2 rounded outline-none"
               />
-              <button className="bg-neon text-dark px-4 py-2 rounded">Send</button>
+              <button className="bg-neon text-darkLight px-4 py-2 rounded"><Send  /></button>
             </div>
           </form>
         )}
