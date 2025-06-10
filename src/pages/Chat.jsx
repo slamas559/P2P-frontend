@@ -28,7 +28,8 @@ const Chat = () => {
   const chatEndRef = useRef(null);
   const location = useLocation();
   const socket = useRef();
-  const { receiver, preMessage } = location.state || {};
+  const { receiver, preMessage: initialPreMessage } = location.state || {};
+  const [preMessage, setPreMessage] = useState(initialPreMessage);
   const userId = auth?.user?._id;
   const navigate = useNavigate();
 
@@ -158,6 +159,7 @@ const Chat = () => {
         socket.current.emit("send_message", newMessage);
         localStorage.setItem(localStorageKey, "true");
         setClicked(true);
+        setPreMessage(null);
       }
     };
     sendPreMessage();
@@ -279,7 +281,7 @@ const Chat = () => {
               key={conv._id}
               onClick={() => handleConversationSelect(conv)}
               className={`relative flex items-center justify-between gap-3 p-3 rounded cursor-pointer mb-2 hover:bg-neonLight hover:text-dark ${
-                isSelected ? "bg-darkLight text-dark" : "bg-gray-800"
+                isSelected ? "bg-gray-700 text-dark" : ""
               }`}
             >
               <div className="flex items-center gap-3">
@@ -298,7 +300,7 @@ const Chat = () => {
 
               <div className="flex flex-col items-end">
                 {lastMessage?.createdAt && (
-                  <span className="text-xs text-gray-500">
+                  <span className="text-[10px] text-gray-500">
                     {new Date(lastMessage.createdAt).toLocaleTimeString([], {
                       hour: "2-digit",
                       minute: "2-digit",
@@ -319,6 +321,7 @@ const Chat = () => {
       {/* Chat content */}
       <div className="flex-1 flex flex-col p-4 bg-dark rounded-lg h-full min-h-0">
         <div className="mb-4 shrink-0">
+          
           <h2 className="text-neon text-lg font-bold">
             {selectedConversation
               ? conversations
@@ -378,7 +381,7 @@ const Chat = () => {
               </>
             )
           ) : (
-            <p className="text-center">Start Messaging</p>
+            <p className="text-center">Start Messaging 💬</p>
           )}
           <div ref={chatEndRef} />
         </div>

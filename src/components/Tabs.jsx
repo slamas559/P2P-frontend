@@ -2,7 +2,7 @@
 export default function Tabs({ activeTab, setActiveTab }) {
   const tabs = ["Buy", "Sell"];
   return (
-    <div className="flex bg-dark  border-neon">
+    <div className="flex bg-dark border w-fit rounded-lg p-1 border-neonLight shadow-lg">
       {tabs.map((tab) => (
         <button
           key={tab}

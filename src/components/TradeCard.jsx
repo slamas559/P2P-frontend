@@ -64,7 +64,7 @@ const TradeCard = ({ trade }) => {
         </a>
 
         <p className="text-gray-400 text-xs md:text-xs mb-1">ID: {trade._id}</p>
-        <p className="text-white text-lg md:text-ll font-semibold space-grotesk">
+        <p className={`${ trade.type === "buy"?"text-green-500":"text-red-400" } text-lg md:text-ll font-semibold space-grotesk`}>
           {convertToCurrency(trade.price)}
           <span className="text-gray-400 text-sm">/NGN</span>
         </p>
